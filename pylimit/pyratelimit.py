@@ -67,12 +67,13 @@ class PyRateLimit(object):
             raise PyRateLimitException("redis connection information not provided")
         connection = PyRateLimit.redis_helper.get_atomic_connection()
         current_time = int(round(time.time() * 1000000))
+        current_time_mapping = {current_time:current_time}
         old_time_limit = current_time - (self.period * 1000000)
         connection.zremrangebyscore(namespace, 0, old_time_limit)
         connection.expire(namespace, self.period)
         if add_attempt:
             current_count = 0
-            connection.zadd(namespace, current_time, current_time)
+            connection.zadd(name=namespace, mapping=current_time_mapping)
         else:
             current_count = 1   # initialize at 1 to compensate the case that this attempt is not getting counted
         connection.zcard(namespace)
