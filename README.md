@@ -1,5 +1,9 @@
-# pylimit
+# pyratelimit
 A distributed rate limiting library for python using leaky bucket algorithm and Redis
+
+Based on [biplap-sarkar/pylimit](https://github.com/biplap-sarkar/pylimit), updated to 
+support Redis 3.0 at [tomis-tech/pyratelimit](https://github.com/tomis-tech/pyratelimit).
+This fork is just to create a python package to make it installable with pip.
 
 # Prerequisites
 This library makes use of Redis and needs it as a prerequisite. Redis sentinel is also supported.
@@ -8,7 +12,7 @@ Make sure that Redis server is running before using this library
 # Installation
 
 ```
-pip install pylimit
+pip install pyratelimit
 ```
 
 # Example
@@ -34,14 +38,14 @@ limit.create(60,                    # rate limit period in seconds
 
 4.) Record ant attempt and check if it is allowed or not
 ```
-is_allowed = limit.attempt('api_count')   # will return true if number of attempts
+is_allowed = limit.attempt('namespace_key')   # will return true if number of attempts
                                           # are less than or equal to 1000 in last 1 minute,
                                           # false otherwise
 ```
 
 5.) In order to check if a namespace is already rate limited or not
 ```
-is_rate_limited = limit.is_rate_limited('api_count')  # will return true if this namespace is already rate limited, false otherwise
+is_rate_limited = limit.is_rate_limited('namespace_key')  # will return true if this namespace is already rate limited, false otherwise
 ```
 
 # Reference

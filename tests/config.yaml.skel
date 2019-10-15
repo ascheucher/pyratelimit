@@ -1,0 +1,4 @@
+# copy file to config.yaml and edit it.
+redis:
+  host: HOSTNAME
+  port: 6379

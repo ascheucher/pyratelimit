@@ -1,7 +1,7 @@
 import time
 
-from pylimit.redis_helper import RedisHelper
-from pylimit.pyratelimit_exception import PyRateLimitException
+from pyratelimit.redis_helper import RedisHelper
+from pyratelimit.pyratelimit_exception import PyRateLimitException
 
 
 class PyRateLimit(object):
