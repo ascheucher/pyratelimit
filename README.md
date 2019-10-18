@@ -48,5 +48,12 @@ is_allowed = limit.attempt('namespace_key')   # will return true if number of at
 is_rate_limited = limit.is_rate_limited('namespace_key')  # will return true if this namespace is already rate limited, false otherwise
 ```
 
+# Warning - Redis configuration
+
+As this library caused problems when redis is hosted in the standard container, the 
+redis config is set to *config set stop-writes-on-bgsave-error no*.
+
+If this is a problem for your installation, the behavior can be turned off in the redis helper.
+
 # Reference
 https://engineering.classdojo.com/blog/2015/02/06/rolling-rate-limiter/
