@@ -5,7 +5,7 @@ from redis.sentinel import Sentinel
 
 class RedisHelper(object):
     def __init__(
-        self, host: str, port: int, is_sentinel=False, sentinel_service=None, password=None
+        self, host: str, port: int, is_sentinel=False, sentinel_service=None, password=None, alter_redis_config=True
     ):
         self.host = host
         self.port = port
@@ -15,6 +15,8 @@ class RedisHelper(object):
 
         self.connection = None
         self.get_connection()  # Ensure connection is established
+        if alter_redis_config:
+            self.set_config()  # set redis config to be suitable for our scenario
 
     def get_connection(self, is_read_only=False) -> redis.Redis:
         """
@@ -51,3 +53,7 @@ class RedisHelper(object):
         :return: Returns a Pipeline object
         """
         return self.get_connection().pipeline(True)
+
+    def set_config(self):
+        # config set stop-writes-on-bgsave-error no
+        self.get_connection().config_set('stop-writes-on-bgsave-error', 'no')
